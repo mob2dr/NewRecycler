@@ -1,7 +1,5 @@
 package com.example.recycler;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder> {
     ImageView imageView;
@@ -43,7 +39,7 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
     private OnDataClicked onItemClickedListener;
     interface OnDataClicked {
         void edit(Data data, int position);
-        void delet(Data data );
+        void delete(Data data );
     }
 
     @Override
@@ -60,7 +56,7 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickedListener.delet(data);
+                onItemClickedListener.delete(data);
 
             }
         });
