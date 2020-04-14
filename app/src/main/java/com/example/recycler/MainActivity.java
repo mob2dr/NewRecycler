@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     final int ADD_REQUEST_CODE = 1;
     final int EDIT_REQUEST_CODE = 2;
-    ArrayList<Data> datalist = new ArrayList<>();
+    public ArrayList<Data> datalist = new ArrayList<>();
     DataAdapter.OnDataClicked o = new DataAdapter.OnDataClicked() {
         @Override
         public void edit(Data data, int position) {

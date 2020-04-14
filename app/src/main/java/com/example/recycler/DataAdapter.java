@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder> {
     ImageView imageView;
-    ArrayList<Data>datas=new ArrayList<>();
     static  DiffUtil.ItemCallback<Data> diffCallback=new DiffUtil.ItemCallback<Data>() {
         @Override
         public boolean areItemsTheSame(@NonNull Data oldItem, @NonNull Data newItem) {
