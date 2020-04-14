@@ -53,7 +53,7 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickedListener.edit(getItem(position), position);
+                onItemClickedListener.edit(data, position);
             }
         });
         imageView=holder.itemView.findViewById(R. id.img_delete);
