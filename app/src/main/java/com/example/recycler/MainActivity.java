@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Data> list=new ArrayList<Data>(datalist);
             adapter.submitList(list);
         } else if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            datalist.set(data.getIntExtra("position", 0), (Data) data.getSerializableExtra("data"));
+            datalist.set(data.getIntExtra("position",0), (Data) data.getSerializableExtra("data"));
             adapter.submitList(datalist);
         }
 
