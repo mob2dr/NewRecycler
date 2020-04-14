@@ -43,7 +43,7 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
     private OnDataClicked onItemClickedListener;
     interface OnDataClicked {
         void edit(Data data, int position);
-        void delet(Data data);
+        void delet(Data data );
     }
 
     @Override
@@ -53,7 +53,7 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickedListener.edit(data, position);
+                onItemClickedListener.edit(getItem(position), position);
             }
         });
         imageView=holder.itemView.findViewById(R. id.img_delete);
