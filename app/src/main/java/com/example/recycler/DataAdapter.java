@@ -34,7 +34,6 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
         this.onItemClickedListener = onItemClickedListener;
     }
 
-    @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_data, parent, false);
@@ -44,26 +43,32 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
     private OnDataClicked onItemClickedListener;
     interface OnDataClicked {
         void edit(Data data, int position);
-        void delet(Data data ,int position);
+        void delet(Data data);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, final int position) {
         holder.onBind(getItem(position));
+        final  Data data=getItem(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickedListener.edit(getItem(position), position);
+                onItemClickedListener.edit(data, position);
             }
         });
         imageView=holder.itemView.findViewById(R. id.img_delete);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickedListener.delet(getItem(position),position);
+                onItemClickedListener.delet(data);
 
             }
         });
+    }
+
+    @Override
+    protected Data getItem(int position) {
+        return super.getItem(position);
     }
 
     class ContactViewHolder extends RecyclerView.ViewHolder {

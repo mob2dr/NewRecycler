@@ -36,11 +36,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void delet(Data data ,int position) {
-            datalist.remove(position);
+        public void delet(Data data ) {
+            datalist.remove(data);
             ArrayList<Data> list=new ArrayList<Data>(datalist);
-            adapter.submitList(list);
-        }
+            adapter.submitList(list); }
 
         };
 
