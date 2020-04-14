@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         public void edit(Data data, int position) {
             Intent intent = new Intent(MainActivity.this, AddData.class);
             intent.putExtra("data", data);
+            intent.putExtra("position",position);
             startActivityForResult(intent, EDIT_REQUEST_CODE);
         }
 

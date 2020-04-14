@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder> {
     ImageView imageView;
+    ArrayList<Data>datas=new ArrayList<>();
     static  DiffUtil.ItemCallback<Data> diffCallback=new DiffUtil.ItemCallback<Data>() {
         @Override
         public boolean areItemsTheSame(@NonNull Data oldItem, @NonNull Data newItem) {
@@ -38,7 +41,7 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
 
     private OnDataClicked onItemClickedListener;
     interface OnDataClicked {
-        void edit(Data data, int position);
+        void edit(Data data, int  position);
         void delete(Data data );
     }
 
@@ -62,10 +65,6 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
         });
     }
 
-    @Override
-    protected Data getItem(int position) {
-        return super.getItem(position);
-    }
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView textName, textNumber;
