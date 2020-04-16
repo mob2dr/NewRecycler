@@ -79,4 +79,5 @@ public class DataAdapter extends ListAdapter<Data,DataAdapter.ContactViewHolder>
             textNumber.setText(contact.getNumber());
         }
     }
+
 }

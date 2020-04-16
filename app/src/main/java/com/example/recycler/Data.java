@@ -1,9 +1,21 @@
 package com.example.recycler;
 
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "MyData")
 public class Data implements Serializable {
-    private String name , number;
+    @ColumnInfo(name = "Name")
+    private String name;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "Number")
+    private String number;
 
     public Data(String name, String number) {
         this.name = name;

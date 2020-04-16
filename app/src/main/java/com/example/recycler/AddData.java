@@ -23,7 +23,7 @@ public class AddData extends AppCompatActivity {
         if (getIntent().hasExtra("data")) {
             Data contact = (Data) getIntent().getSerializableExtra("data");
             addName.setText(contact.getName());
-            addNumber.setText(contact.getNumber());
+             addNumber.setText(contact.getNumber());
         }
     }
 
@@ -39,7 +39,6 @@ public class AddData extends AppCompatActivity {
                 if (data != null) {
                     Intent intent = new Intent();
                     intent.putExtra("data", data);
-                    intent.putExtra("position",getIntent().getIntExtra("position",0));
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
