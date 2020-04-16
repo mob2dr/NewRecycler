@@ -15,6 +15,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import Database.AppDatabase;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 import static androidx.core.app.ActivityCompat.startActivityForResult;
@@ -25,21 +28,24 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     final int ADD_REQUEST_CODE = 1;
     final int EDIT_REQUEST_CODE = 2;
-    public ArrayList<Data> datalist = new ArrayList<>();
+    AppDatabase db ;
+    List<Data> dbContacts;
     DataAdapter.OnDataClicked o = new DataAdapter.OnDataClicked() {
         @Override
         public void edit(Data data, int position) {
             Intent intent = new Intent(MainActivity.this, AddData.class);
             intent.putExtra("data", data);
-            intent.putExtra("position",datalist.indexOf(data));
+            intent.putExtra("position",dbContacts.indexOf(data));
             startActivityForResult(intent, EDIT_REQUEST_CODE);
         }
 
         @Override
         public void delete(Data data ) {
-            datalist.remove(data);
-            ArrayList<Data> list=new ArrayList<Data>(datalist);
-            adapter.submitList(list); }
+            db.dataDao().delete(data);
+            dbContacts=db.dataDao().getDatas();
+            ArrayList<Data> list = new ArrayList<>(dbContacts);
+            adapter.submitList(list);
+            }
 
         };
 
@@ -50,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        db = AppDatabase.getInstance(this);
+        dbContacts = db.dataDao().getDatas();
+        adapter.submitList(dbContacts);
     }
-
 
     void initViews() {
         recyclerView = findViewById(R.id.rv);
@@ -70,12 +78,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            datalist.add((Data) data.getSerializableExtra("data"));
-            ArrayList<Data> list=new ArrayList<Data>(datalist);
+            db.dataDao().insertData((Data) data.getSerializableExtra("data"));
+            dbContacts=db.dataDao().getDatas();
+            ArrayList<Data> list=new ArrayList<Data>(dbContacts);
             adapter.submitList(list);
         } else if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            datalist.set(data.getIntExtra("position",0), (Data) data.getSerializableExtra("data"));
-            adapter.submitList(datalist);
+            db.dataDao().updataData((Data) data.getSerializableExtra("data"));
+            ArrayList<Data> list=new ArrayList<Data>(dbContacts);
+            adapter.submitList(list);
+
         }
 
 
