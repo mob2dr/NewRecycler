@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         public void edit(Data data, int position) {
             Intent intent = new Intent(MainActivity.this, AddData.class);
             intent.putExtra("data", data);
-            intent.putExtra("position",dbContacts.indexOf(data));
+            intent.putExtra("position", dbContacts.indexOf(data));
             startActivityForResult(intent, EDIT_REQUEST_CODE);
         }
 
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             adapter.submitList(list);
         } else if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             db.dataDao().updataData((Data) data.getSerializableExtra("data"));
+            dbContacts=db.dataDao().getDatas();
             ArrayList<Data> list=new ArrayList<Data>(dbContacts);
             adapter.submitList(list);
 
