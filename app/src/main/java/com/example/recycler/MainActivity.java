@@ -8,20 +8,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.google.android.material.card.MaterialCardView;
+import com.example.recycler.AsynTask.AddDataAsync;
+import com.example.recycler.AsynTask.DataAsync;
+import com.example.recycler.AsynTask.DelDataAsync;
+import com.example.recycler.AsynTask.EditDataAsync;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import Database.AppDatabase;
+import com.example.recycler.Database.AppDatabase;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static androidx.core.app.ActivityCompat.startActivityForResult;
+import javax.security.auth.callback.Callback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,22 +28,26 @@ public class MainActivity extends AppCompatActivity {
     final int ADD_REQUEST_CODE = 1;
     final int EDIT_REQUEST_CODE = 2;
     AppDatabase db ;
-    List<Data> dbContacts;
+
+    DataAsync.CallBackData callBackData=new DataAsync.CallBackData() {
+        @Override
+        public void getCallBack(List<Data> Datas) {
+             adapter.submitList(Datas);
+        }
+    };
     DataAdapter.OnDataClicked o = new DataAdapter.OnDataClicked() {
         @Override
         public void edit(Data data, int position) {
             Intent intent = new Intent(MainActivity.this, AddData.class);
             intent.putExtra("data", data);
-            intent.putExtra("position", dbContacts.indexOf(data));
+            intent.putExtra("position", position);
             startActivityForResult(intent, EDIT_REQUEST_CODE);
         }
 
         @Override
         public void delete(Data data ) {
-            db.dataDao().delete(data);
-            dbContacts=db.dataDao().getDatas();
-            ArrayList<Data> list = new ArrayList<>(dbContacts);
-            adapter.submitList(list);
+            DelDataAsync del=new DelDataAsync(db,callBackData);
+            del.execute(data);
             }
 
         };
@@ -57,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         db = AppDatabase.getInstance(this);
-        dbContacts = db.dataDao().getDatas();
-        adapter.submitList(dbContacts);
+        DataAsync dataAsync=new DataAsync(db,callBackData);
+        dataAsync.execute();
+
     }
 
     void initViews() {
@@ -78,16 +82,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            db.dataDao().insertData((Data) data.getSerializableExtra("data"));
-            dbContacts=db.dataDao().getDatas();
-            ArrayList<Data> list=new ArrayList<Data>(dbContacts);
-            adapter.submitList(list);
+            AddDataAsync add = new AddDataAsync(db,callBackData);
+            add.execute((Data) data.getSerializableExtra("data"));
         } else if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            db.dataDao().updataData((Data) data.getSerializableExtra("data"));
-            dbContacts=db.dataDao().getDatas();
-            ArrayList<Data> list=new ArrayList<Data>(dbContacts);
-            adapter.submitList(list);
-
+            EditDataAsync edit =new EditDataAsync(db,callBackData);
+            edit.execute((Data) data.getSerializableExtra("data"));
         }
 
 

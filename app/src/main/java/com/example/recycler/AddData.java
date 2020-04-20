@@ -1,12 +1,9 @@
 package com.example.recycler;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,8 +25,8 @@ public class AddData extends AppCompatActivity {
     }
 
     void initView() {
-        addName = findViewById(R.id.add_name);
-        addNumber=findViewById(R.id.add_number);
+        addName   = findViewById(R.id.add_name);
+        addNumber = findViewById(R.id.add_number);
 
         FloatingActionButton fab = findViewById(R.id.floatb);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +43,7 @@ public class AddData extends AppCompatActivity {
         });
     }
 
-    private Data creatData(String name, String number) {
+    private Data creatData(String name, String number ) {
         boolean invalid = false;
         if (name == null || name.isEmpty()) {
             invalid = true;

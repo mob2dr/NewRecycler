@@ -1,17 +1,12 @@
-package Database;
+package com.example.recycler.Database;
 
-import android.annotation.SuppressLint;
-
-import androidx.core.app.RemoteInput;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
-import androidx.room.PrimaryKey;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.recycler.AddData;
 import com.example.recycler.Data;
 import java.util.List;
 @Dao
